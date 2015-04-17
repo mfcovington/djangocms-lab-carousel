@@ -48,6 +48,21 @@ class CarouselAdmin(admin.ModelAdmin):
 admin.site.register(Carousel, CarouselAdmin)
 
 
+class CarouselFilter(admin.SimpleListFilter):
+    title = 'Carousel'
+    parameter_name = 'carousel'
+
+    def lookups(self, request, model_admin):
+        carousel_list = set([slide.carousel for slide in model_admin.model.objects.all()])
+        return [(carosuel.id, carosuel.title) for carosuel in carousel_list]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(carousel__id__exact=self.value())
+        else:
+            return queryset
+
+
 class SlideAdmin(admin.ModelAdmin):
 
     fieldset_basic = ('Basic Slide Info', {
@@ -94,7 +109,7 @@ class SlideAdmin(admin.ModelAdmin):
     ]
 
     list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime' ]
-    list_filter = ['publish_slide', 'journal_name']
+    list_filter = [CarouselFilter, 'publish_slide', 'journal_name']
     search_fields = ['title', 'subtitle', 'description']
 
 admin.site.register(Slide, SlideAdmin)
