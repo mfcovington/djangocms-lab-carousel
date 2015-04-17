@@ -135,6 +135,7 @@ class Slide(models.Model):
     other_url_color = models.CharField('other URL color',
         blank=True,
         choices=URL_COLOR_CHOICES,
+        default='default',
         help_text="If there is another relevant URL for this slide, " \
                   "choose the color for it's button.",
         max_length=7,
