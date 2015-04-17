@@ -1,0 +1,25 @@
+{% if slide.pubmed_url %}
+  <a href="{{ slide.pubmed_url }}" class="btn btn-primary" target="_blank">PubMed</a>
+{% endif %}
+
+{% if slide.article_url %}
+  <a href="{{ slide.article_url }}" class="btn btn-success" target="_blank">
+    {{ slide.journal_name|default:"Article" }}
+  </a>
+{% endif %}
+
+{% if slide.pdf %}
+  <a href="{{ slide.pdf.url }}" class="btn btn-warning" target="_blank">PDF</a>
+{% endif %}
+
+{% if slide.other_url %}
+  <a href="{{ slide.other_url }}" class="btn btn-{{ slide.other_url_color }}" target="_blank">
+    {{ slide.other_url_label|default:'<span class="glyphicon glyphicon glyphicon-link"></span>' }}
+  </a>
+{% endif %}
+
+{% if slide.image_is_downloadable %}
+  <a href="{{ slide.image.url }}" class="btn btn-default" alt="Download Image"target="_blank">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Image
+  </a>
+{% endif %}

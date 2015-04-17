@@ -1,0 +1,54 @@
+{% load cms_tags sekizai_tags staticfiles %}
+
+{% block title %}{% page_attribute 'title' %}{% endblock title %}
+
+{% block content %}
+
+  {% addtoblock "css" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms_lab_carousel/app.css' %}">
+    <style>
+      .slider-size {
+        height: {{ instance.carousel.slider_height }}px;
+      }
+    </style>
+  {% endaddtoblock %}
+
+  <div class="container">
+    <div class="panel panel-default">
+
+      {% if instance.carousel.show_header %}
+        {% include "cms_lab_carousel/_carousel-header.html" with carousel=instance.carousel %}
+      {% endif %}
+
+      <div id="carousel-{{ instance.carousel.id }}" class="carousel slide" data-ride="carousel">
+
+        {% include "cms_lab_carousel/_carousel-indicators.html" with carousel=instance.carousel %}
+
+        <div class="carousel-inner" role="listbox">
+          {% for slide in published_slides_list %}
+            {% include "cms_lab_carousel/_slide.html" with carousel=instance.carousel %}
+          {% endfor %}
+        </div>
+
+        {% include "cms_lab_carousel/_carousel-controls.html" with carousel=instance.carousel %}
+
+      </div>
+
+      {% if instance.carousel.show_footer %}
+        {% include "cms_lab_carousel/_carousel-footer.html" with carousel=instance.carousel %}
+      {% endif %}
+
+    </div>
+  </div>
+
+  {% for slide in published_slides_list %}
+    {% include "cms_lab_carousel/_modal.html" with carousel=instance.carousel %}
+  {% endfor %}
+
+  {% addtoblock "js" %}
+    <script>
+      $('#carousel-{{ instance.carousel.id }}').carousel({interval: {{ instance.carousel.slider_duration }}})
+    </script>
+  {% endaddtoblock %}
+
+{% endblock content %}
