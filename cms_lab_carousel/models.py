@@ -52,10 +52,10 @@ class Carousel(models.Model):
         ]
     )
     slide_limit = models.IntegerField('slide limit',
-        default=0,
-        help_text="Specify the maximum # of slides to display (enter '0' for unlimited).",
+        default=10,
+        help_text="Specify the maximum # of slides to display.",
         validators=[
-            MinValueValidator(0),
+            MinValueValidator(1),
         ]
     )
 
