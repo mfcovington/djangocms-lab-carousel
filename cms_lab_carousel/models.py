@@ -1,3 +1,4 @@
+from cms.models import CMSPlugin
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
@@ -168,3 +169,10 @@ class Slide(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CarouselPlugin (CMSPlugin):
+    carousel = models.ForeignKey('cms_lab_carousel.Carousel')
+
+    def __str__(self):
+        return self.carousel.title
