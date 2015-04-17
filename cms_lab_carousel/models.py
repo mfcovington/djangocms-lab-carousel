@@ -37,20 +37,6 @@ class Carousel(models.Model):
         default=True,
     )
 
-    header_height = models.IntegerField('header height (px)',
-        default=100,
-        help_text="Enter the carousel header's height.",
-        validators=[
-            MinValueValidator(0),
-        ]
-    )
-    footer_height = models.IntegerField('footer height (px)',
-        default=100,
-        help_text="Enter the carousel footer's height.",
-        validators=[
-            MinValueValidator(0),
-        ]
-    )
     slider_height = models.IntegerField('slider height (px)',
         default=390,
         help_text="Enter the carousel slider's height.",
@@ -58,7 +44,6 @@ class Carousel(models.Model):
             MinValueValidator(100),
         ]
     )
-
     slider_duration = models.IntegerField('slider duration (milliseconds)',
         default=8000,
         help_text='Specify the duration each slide is displayed.',

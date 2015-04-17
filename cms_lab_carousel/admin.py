@@ -19,17 +19,9 @@ class CarouselAdmin(admin.ModelAdmin):
         'classes': ['collapse'],
     })
 
-    fieldset_dimensions = ('Dimensions', {
-        'fields': [
-            'header_height',
-            'footer_height',
-            'slider_height',
-        ],
-        'classes': ['collapse'],
-    })
-
     fieldset_slides = ('Slide Settings', {
         'fields': [
+            'slider_height',
             'slider_duration',
             'slide_limit',
         ],
@@ -39,7 +31,6 @@ class CarouselAdmin(admin.ModelAdmin):
     fieldsets = [
         fieldset_frame,
         fieldset_visibility,
-        fieldset_dimensions,
         fieldset_slides,
     ]
 
