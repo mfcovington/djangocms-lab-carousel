@@ -1,0 +1,14 @@
+<div class="panel-heading"
+  {% if carousel.header_image %}
+    style="background:url({{ carousel.header_image.url }});
+           background-size: contain;"
+  {% endif %}
+>
+  {% if carousel.show_title %}
+    <h1 class="text-center shadow-heavy">
+      {{ carousel.title }}
+    </h1>
+  {% else %}
+    <h1>&nbsp;</h1>
+  {% endif %}
+</div>
