@@ -146,7 +146,7 @@ class Slide(models.Model):
         help_text='Should this slide be published to the carousel?',
     )
     publish_datetime = models.DateTimeField('date/time slide published',
-        default=timezone.now(),
+        default=timezone.now,
         help_text='Choose date/time to publish slide. ' \
                   'Slides are displayed in reverse-chronological order, ' \
                   'so this can be used to control their order. ' \
