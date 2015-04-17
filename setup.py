@@ -42,8 +42,8 @@ install_requires = [
 ]
 
 setup(
-    name='djangocms-shiny-app',
-    version='0.1.0',
+    name='djangocms-lab-carousel',
+    version='0.1.1',
     packages=['cms_lab_carousel'],
     include_package_data=True,
     license='BSD License',
