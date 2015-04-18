@@ -9,7 +9,7 @@ from cms_lab_carousel.models import Carousel, Slide
 
 class CMSCarouselPlugin(CMSPluginBase):
     model = CarouselPlugin
-    module = "Carousels"
+    module = "Lab Plugins"
     name = "Carousel Plugin"
     render_template = "cms_lab_carousel/plugin.html"
 
