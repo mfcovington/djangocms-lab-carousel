@@ -1,6 +1,5 @@
 {% load cms_tags sekizai_tags staticfiles %}
 
-{% block title %}{% page_attribute 'title' %}{% endblock title %}
 
 {% block content %}
 
@@ -13,7 +12,9 @@
     </style>
   {% endaddtoblock %}
 
-  <div class="container">
+  <!-- This div.container only needed if base.html doesn't have one surrounding content block -->
+  <!-- <div class="container"> -->
+
     <div class="panel panel-default">
 
       {% if instance.carousel.show_header %}
@@ -39,7 +40,9 @@
       {% endif %}
 
     </div>
-  </div>
+
+  <!-- This div.container only needed if base.html doesn't have one surrounding content block -->
+  <!-- </div> -->
 
   {% for slide in published_slides_list %}
     {% include "cms_lab_carousel/_modal.html" with carousel=instance.carousel %}
