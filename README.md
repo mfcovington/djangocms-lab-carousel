@@ -65,6 +65,6 @@ CMS Lab Carousel is A Django app for adding carousel of recent papers, etc. to a
 
 - Start the development server (`python manage.py runserver`) and visit http://127.0.0.1:8000/
 
-- Create a CMS page and attach the `Lab Carousel App` under `Advanced Settings` for the page.
+- Create a CMS page and insert the `Carousel Plugin` into a placeholder field.
 
-*Version 0.1.1*
+*Version 0.1.2*
