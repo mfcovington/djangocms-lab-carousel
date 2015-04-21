@@ -3,12 +3,17 @@
   <div style="background:url('{{ slide.image.url }}') center center;
               background-size:cover;" class="slider-size">
     <div class="carousel-caption container-fluid">
-      <h4>{{ slide.title }}</h4>
-      <h5>{{ slide.subtitle|default:'&nbsp;' }}</h5>
+      <h4 class="slide-title">{{ slide.title }}</h4>
 
-      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-c{{ carousel.id }}-s{{ slide.id }}"><span class="glyphicon glyphicon-info-sign"></span> more info</button>
-      <div class="btn-group btn-group-sm hidden-xs" role="group" aria-label="...">
-        {% include "cms_lab_carousel/_buttons.html" %}
+      {% if slide.subtitle %}
+        <h5 class="slide-subtitle">{{ slide.subtitle }}</h5>
+      {% endif %}
+
+      <div class="slide-buttons">
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-c{{ carousel.id }}-s{{ slide.id }}"><span class="glyphicon glyphicon-info-sign"></span> more info</button>
+        <div class="btn-group btn-group-sm hidden-xs" role="group" aria-label="...">
+          {% include "cms_lab_carousel/_buttons.html" %}
+        </div>
       </div>
 
       <p></p>
