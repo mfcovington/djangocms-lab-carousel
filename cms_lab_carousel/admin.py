@@ -45,7 +45,7 @@ class CarouselFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         carousel_list = set([slide.carousel for slide in model_admin.model.objects.all()])
-        return [(carosuel.id, carosuel.title) for carosuel in carousel_list]
+        return [(carousel.id, carousel.title) for carousel in carousel_list]
 
     def queryset(self, request, queryset):
         if self.value():
