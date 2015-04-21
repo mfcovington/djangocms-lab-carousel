@@ -1,3 +1,7 @@
+/******************/
+/* Carousel Frame */
+/******************/
+
 .panel-heading,
 .panel-footer {
   background-color: black;
@@ -25,6 +29,11 @@
                0 0 0.2em black;
 }
 
+
+/**********/
+/* Modals */
+/**********/
+
 .modal-footer .btn-group-vertical .btn + .btn {
   margin-left: 0px;
 }
@@ -32,6 +41,11 @@
 .modal-footer .btn-group-vertical + .btn-group-vertical {
   margin-top: 5px;
 }
+
+
+/**********/
+/* Slides */
+/**********/
 
 .slide-title + .slide-buttons {
   margin-top: 20px;
