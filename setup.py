@@ -49,7 +49,7 @@ setup(
     license='BSD License',
     description='A Django app for adding carousel of recent papers, etc. to a Django site with django CMS-specific features',
     long_description=README,
-    # url='http://www.example.com/',
+    url='https://github.com/mfcovington/djangocms-lab-carousel',
     author='Michael F. Covington',
     author_email='mfcovington@gmail.com',
     classifiers=[
