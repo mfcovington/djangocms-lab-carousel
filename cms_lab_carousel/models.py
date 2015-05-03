@@ -1,4 +1,5 @@
 from cms.models import CMSPlugin
+from cms.models.fields import PageField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
@@ -123,11 +124,12 @@ class Slide(models.Model):
                   "It will be displayed on the button linking to the article's URL.",
     )
 
-    page_link = models.ForeignKey('cms.Page',
+    page_link = PageField(
         blank=True,
         null=True,
         help_text="If there is a relevant CMS page for this slide, select it.",
         on_delete=models.SET_NULL,
+        related_name='page_link',
         verbose_name="CMS page",
     )
     page_link_label = models.CharField('page link label',
