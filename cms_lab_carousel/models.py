@@ -122,6 +122,38 @@ class Slide(models.Model):
         help_text="If this slide is for a publication, enter the journal's name. " \
                   "It will be displayed on the button linking to the article's URL.",
     )
+
+    page_link = models.ForeignKey('cms.Page',
+        blank=True,
+        null=True,
+        help_text="If there is a relevant CMS page for this slide, select it.",
+        on_delete=models.SET_NULL,
+        verbose_name="CMS page",
+    )
+    page_link_label = models.CharField('page link label',
+        blank=True,
+        help_text="The default label is the page name. " \
+                  "To override the default, enter a new label.",
+        max_length=20,
+    )
+    page_link_color = models.CharField('page link color',
+        blank=True,
+        choices=URL_COLOR_CHOICES,
+        default='default',
+        help_text="If there is a page link for this slide, " \
+                  "choose the color for it's button.",
+        max_length=7,
+    )
+    page_link_anchor = models.CharField("anchor",
+        blank=True,
+        help_text="If relevant, specify an anchor on the linked page.",
+        max_length=255,
+    )
+    page_link_target = models.BooleanField("new tab?",
+        default=False,
+        help_text='Open page link in a new tab?',
+    )
+
     other_url = models.URLField('other URL',
         blank=True,
         help_text='If there is another relevant URL for this slide, enter it.',
