@@ -12,6 +12,17 @@
   <a href="{{ slide.pdf.url }}" class="btn btn-warning" target="_blank">PDF</a>
 {% endif %}
 
+{% if slide.page_link %}
+  <a
+      href="{{ slide.page_link.get_absolute_url }}{% if slide.page_link_anchor %}#{{ slide.page_link_anchor }}{% endif %}"
+      class="btn btn-{{ slide.page_link_color }}"
+      {% if slide.page_link_target %}
+        target="_blank"
+      {% endif %}>
+        {{ slide.page_link_label|default:slide.page_link.get_title }}
+  </a>
+{% endif %}
+
 {% if slide.other_url %}
   <a href="{{ slide.other_url }}" class="btn btn-{{ slide.other_url_color }}" target="_blank">
     {{ slide.other_url_label|default:'<span class="glyphicon glyphicon glyphicon-link"></span>' }}

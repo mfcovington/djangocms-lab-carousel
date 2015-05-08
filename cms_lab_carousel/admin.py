@@ -76,6 +76,17 @@ class SlideAdmin(admin.ModelAdmin):
         ],
     })
 
+    fieldset_page_link = ('Page Link', {
+        'fields': [
+            'page_link',
+            'page_link_label',
+            'page_link_color',
+            'page_link_anchor',
+            'page_link_target',
+        ],
+        'classes': ['collapse'],
+    })
+
     fieldset_other_url = ('Other URL', {
         'fields': [
             'other_url',
@@ -95,6 +106,7 @@ class SlideAdmin(admin.ModelAdmin):
     fieldsets = [
         fieldset_basic,
         fieldset_article,
+        fieldset_page_link,
         fieldset_other_url,
         fieldset_publish,
     ]
