@@ -43,7 +43,7 @@ install_requires = [
 
 setup(
     name='djangocms-lab-carousel',
-    version='0.1.3',
+    version='0.1.4',
     packages=['cms_lab_carousel'],
     include_package_data=True,
     license='BSD License',
