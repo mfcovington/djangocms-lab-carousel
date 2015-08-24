@@ -33,6 +33,7 @@ install_requires = [
     "djangocms-googlemap==0.2",
     "djangocms-inherit==0.1",
     "djangocms-installer==0.7.3",
+    "djangocms-lab-publications>=0.1.4"
     "djangocms-link==1.5",
     "djangocms-picture==0.1",
     "djangocms-style==1.5",
