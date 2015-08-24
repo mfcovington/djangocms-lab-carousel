@@ -6,6 +6,9 @@ from django.utils import timezone
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
+from cms_lab_publications.models import Publication
+
+
 class Carousel(models.Model):
 
     title = models.CharField('carousel title',
@@ -103,6 +106,11 @@ class Slide(models.Model):
         default=False,
     )
 
+    publication = models.ForeignKey(Publication,
+        help_text='If this slide is for a publication, select/create a publication.',
+        blank=True,
+        null=True,
+    )
     pdf = FilerFileField(
         blank=True,
         null=True,

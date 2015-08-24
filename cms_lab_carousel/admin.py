@@ -69,6 +69,7 @@ class SlideAdmin(admin.ModelAdmin):
 
     fieldset_article = ('Scientific Article Info', {
         'fields': [
+            'publication',
             'pdf',
             'pubmed_url',
             'article_url',
