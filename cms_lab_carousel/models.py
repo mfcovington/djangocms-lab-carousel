@@ -125,26 +125,6 @@ class Slide(models.Model):
         blank=True,
         null=True,
     )
-    pdf = FilerFileField(
-        blank=True,
-        null=True,
-        help_text='If this slide is for a publication, choose/upload a PDF for this slide.',
-        related_name='slide_pdf',
-    )
-    pubmed_url = models.URLField('PubMed URL',
-        blank=True,
-        help_text='If this slide is for a publication, enter the corresponding PubMed URL.',
-    )
-    article_url = models.URLField('article URL',
-        blank=True,
-        help_text="If this slide is for a publication, enter the article's URL.",
-    )
-    journal_name = models.CharField('journal name',
-        blank=True,
-        max_length=20,
-        help_text="If this slide is for a publication, enter the journal's name. " \
-                  "It will be displayed on the button linking to the article's URL.",
-    )
 
     page_link = PageField(
         blank=True,
