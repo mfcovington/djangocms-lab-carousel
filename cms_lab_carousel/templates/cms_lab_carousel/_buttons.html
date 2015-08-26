@@ -1,15 +1,15 @@
-{% if slide.pubmed_url %}
-  <a href="{{ slide.pubmed_url }}" class="btn btn-primary" target="_blank">PubMed</a>
+{% if slide.publication.pubmed_url %}
+  <a href="{{ slide.publication.pubmed_url }}" class="btn btn-primary" target="_blank">PubMed</a>
 {% endif %}
 
-{% if slide.article_url %}
-  <a href="{{ slide.article_url }}" class="btn btn-success" target="_blank">
-    {{ slide.journal_name|default:"Article" }}
+{% if slide.publication.journal %}
+  <a href="{{ slide.publication.url }}" class="btn btn-success" target="_blank">
+    {{ slide.publication.journal }}
   </a>
 {% endif %}
 
-{% if slide.pdf %}
-  <a href="{{ slide.pdf.url }}" class="btn btn-warning" target="_blank">PDF</a>
+{% if slide.publication.pdf %}
+  <a href="{{ slide.publication.pdf.url }}" class="btn btn-warning" target="_blank">PDF</a>
 {% endif %}
 
 {% if slide.page_link %}
