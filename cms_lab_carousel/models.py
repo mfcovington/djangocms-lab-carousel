@@ -82,19 +82,27 @@ class Slide(models.Model):
     )
 
     title = models.CharField('slide title',
-        help_text='Enter a title for this slide (e.g., publication title). ' \
-                  'This will be overlayed on top of this slide.',
+        blank=True,
+        help_text='Enter a title to be overlayed on top of this slide.<br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'title of the publication.',
         max_length=255,
     )
     subtitle = models.CharField('slide subtitle',
-        help_text='Enter a subtitle for this slide (e.g., publication authors, journal, year). ' \
-                  'This will be overlayed on top of this slide.',
         blank=True,
+        help_text='Enter a subtitle to be overlayed on top of this slide.<br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'citation for the publication.',
         max_length=255,
     )
     description = models.TextField('slide description',
         blank=True,
-        help_text='Enter a description of this slide (e.g., publication abstract).',
+        help_text='Enter a description of this slide.<br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'abstract of the publication.',
     )
     image = FilerImageField(
         help_text='Choose/upload an image for this slide.',
@@ -107,7 +115,13 @@ class Slide(models.Model):
     )
 
     publication = models.ForeignKey(Publication,
-        help_text='If this slide is for a publication, select/create a publication.',
+        help_text='<strong>If this slide is for a publication, ' \
+                  'select/create a publication.</strong><br>' \
+                  'The publication info will be used to auto-populate the ' \
+                  'title, subtitle, and description fields when slide ' \
+                  'is saved (if those fields are left blank).<br>' \
+                  'To override this auto-fill behavior, manually enter ' \
+                  'the title, subtitle, and/or description below.',
         blank=True,
         null=True,
     )
@@ -194,6 +208,33 @@ class Slide(models.Model):
                   'so this can be used to control their order. ' \
                   'A future date will be hide a slide until that date.',
     )
+
+    def save(self, *args, **kwargs):
+        """
+        Before saving, if slide is for a publication, use publication info
+        for slide's title, subtitle, description.
+        """
+        if self.publication:
+            publication = self.publication
+
+            if not self.title:
+                self.title = publication.title
+
+            if not self.subtitle:
+                first_author = publication.first_author
+
+                if first_author == publication.last_author:
+                    authors = first_author
+                else:
+                    authors = '{} et al.'.format(first_author)
+
+                self.subtitle = '{}, {} ({})'.format(authors,
+                    publication.journal, publication.year)
+
+            if not self.description:
+                self.description = publication.abstract
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
