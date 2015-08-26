@@ -104,6 +104,7 @@ class SlideAdmin(admin.ModelAdmin):
 
     list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime' ]
     list_filter = [CarouselFilter, 'publish_slide']
+    save_on_top = True
     search_fields = ['title', 'subtitle', 'description']
 
 admin.site.register(Slide, SlideAdmin)
