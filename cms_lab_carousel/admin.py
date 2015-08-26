@@ -59,6 +59,7 @@ class SlideAdmin(admin.ModelAdmin):
     fieldset_basic = ('Basic Slide Info', {
         'fields': [
             'carousel',
+            'publication',
             'title',
             'subtitle',
             'description',
@@ -69,7 +70,6 @@ class SlideAdmin(admin.ModelAdmin):
 
     fieldset_article = ('Scientific Article Info', {
         'fields': [
-            'publication',
             'pdf',
             'pubmed_url',
             'article_url',
