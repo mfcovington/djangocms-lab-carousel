@@ -1,5 +1,6 @@
 from cms.models import CMSPlugin
 from cms.models.fields import PageField
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
@@ -107,8 +108,12 @@ class Slide(models.Model):
                   'abstract of the publication.',
     )
     image = FilerImageField(
-        help_text='Choose/upload an image for this slide.',
+        help_text='<strong>Choose/upload an image for this slide.</strong><br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, the image for the publication will be used.',
         related_name='slide_image',
+        blank=True,
+        null=True,
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
         help_text='Should the image be downloadable? ' \
@@ -190,6 +195,14 @@ class Slide(models.Model):
                   'so this can be used to control their order. ' \
                   'A future date will be hide a slide until that date.',
     )
+
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        elif self.publication:
+            return self.publication.image.url
+        else:
+            return static('cms_lab_carousel/orange-pixel.gif')
 
     def save(self, *args, **kwargs):
         """
