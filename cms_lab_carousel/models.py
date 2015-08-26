@@ -83,7 +83,8 @@ class Slide(models.Model):
 
     title = models.CharField('slide title',
         blank=True,
-        help_text='Enter a title to be overlayed on top of this slide.<br>' \
+        help_text='<strong>Enter a title to be overlayed on top of this ' \
+                  'slide.</strong><br>' \
                   'If this is a slide for a publication and this field is ' \
                   'left blank, it will be auto-populated with the ' \
                   'title of the publication.',
@@ -91,7 +92,8 @@ class Slide(models.Model):
     )
     subtitle = models.CharField('slide subtitle',
         blank=True,
-        help_text='Enter a subtitle to be overlayed on top of this slide.<br>' \
+        help_text='<strong>Enter a subtitle to be overlayed on top of this ' \
+                  'slide.</strong><br>' \
                   'If this is a slide for a publication and this field is ' \
                   'left blank, it will be auto-populated with the ' \
                   'citation for the publication.',
@@ -99,7 +101,7 @@ class Slide(models.Model):
     )
     description = models.TextField('slide description',
         blank=True,
-        help_text='Enter a description of this slide.<br>' \
+        help_text='<strong>Enter a description of this slide.</strong><br>' \
                   'If this is a slide for a publication and this field is ' \
                   'left blank, it will be auto-populated with the ' \
                   'abstract of the publication.',
@@ -145,7 +147,7 @@ class Slide(models.Model):
         choices=URL_COLOR_CHOICES,
         default='default',
         help_text="If there is a page link for this slide, " \
-                  "choose the color for it's button.",
+                  "choose the color for its button.",
         max_length=7,
     )
     page_link_anchor = models.CharField("anchor",
@@ -165,7 +167,7 @@ class Slide(models.Model):
     other_url_label = models.CharField('other URL label',
         blank=True,
         help_text="If there is another relevant URL for this slide, " \
-                  "enter the label for it's button.",
+                  "enter the label for its button.",
         max_length=20,
     )
     other_url_color = models.CharField('other URL color',
@@ -173,7 +175,7 @@ class Slide(models.Model):
         choices=URL_COLOR_CHOICES,
         default='default',
         help_text="If there is another relevant URL for this slide, " \
-                  "choose the color for it's button.",
+                  "choose the color for its button.",
         max_length=7,
     )
 
