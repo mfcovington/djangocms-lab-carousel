@@ -1,5 +1,10 @@
 import os
+import sys
 from setuptools import setup
+
+if sys.version_info < (3, 2):
+    print("Sorry, djangocms-lab-carousel currently requires Python 3.2+.")
+    sys.exit(1)
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
@@ -28,6 +33,7 @@ install_requires = [
     "djangocms-googlemap==0.2",
     "djangocms-inherit==0.1",
     "djangocms-installer==0.7.3",
+    "djangocms-lab-publications>=0.1.4",
     "djangocms-link==1.5",
     "djangocms-picture==0.1",
     "djangocms-style==1.5",
@@ -43,7 +49,7 @@ install_requires = [
 
 setup(
     name='djangocms-lab-carousel',
-    version='0.1.4',
+    version='0.2.0',
     packages=['cms_lab_carousel'],
     include_package_data=True,
     license='BSD License',

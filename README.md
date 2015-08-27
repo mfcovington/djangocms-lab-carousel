@@ -14,9 +14,11 @@ CMS Lab Carousel is A Django app for adding carousel of recent papers, etc. to a
         INSTALLED_APPS = (
             ...
             'cms_lab_carousel',
+            'cms_lab_publications',
             'easy_thumbnails',
             'filer',
             'mptt',
+            'taggit',
         )
         ```
 
@@ -67,4 +69,4 @@ CMS Lab Carousel is A Django app for adding carousel of recent papers, etc. to a
 
 - Create a CMS page and insert the `Carousel Plugin` into a placeholder field.
 
-*Version 0.1.4*
+*Version 0.2.0*

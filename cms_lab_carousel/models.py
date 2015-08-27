@@ -1,10 +1,14 @@
 from cms.models import CMSPlugin
 from cms.models.fields import PageField
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
+
+from cms_lab_publications.models import Publication
+
 
 class Carousel(models.Model):
 
@@ -79,23 +83,37 @@ class Slide(models.Model):
     )
 
     title = models.CharField('slide title',
-        help_text='Enter a title for this slide (e.g., publication title). ' \
-                  'This will be overlayed on top of this slide.',
+        blank=True,
+        help_text='<strong>Enter a title to be overlayed on top of this ' \
+                  'slide.</strong><br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'title of the publication.',
         max_length=255,
     )
     subtitle = models.CharField('slide subtitle',
-        help_text='Enter a subtitle for this slide (e.g., publication authors, journal, year). ' \
-                  'This will be overlayed on top of this slide.',
         blank=True,
+        help_text='<strong>Enter a subtitle to be overlayed on top of this ' \
+                  'slide.</strong><br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'citation for the publication.',
         max_length=255,
     )
     description = models.TextField('slide description',
         blank=True,
-        help_text='Enter a description of this slide (e.g., publication abstract).',
+        help_text='<strong>Enter a description of this slide.</strong><br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, it will be auto-populated with the ' \
+                  'abstract of the publication.',
     )
     image = FilerImageField(
-        help_text='Choose/upload an image for this slide.',
+        help_text='<strong>Choose/upload an image for this slide.</strong><br>' \
+                  'If this is a slide for a publication and this field is ' \
+                  'left blank, the image for the publication will be used.',
         related_name='slide_image',
+        blank=True,
+        null=True,
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
         help_text='Should the image be downloadable? ' \
@@ -103,25 +121,16 @@ class Slide(models.Model):
         default=False,
     )
 
-    pdf = FilerFileField(
+    publication = models.ForeignKey(Publication,
+        help_text='<strong>If this slide is for a publication, ' \
+                  'select/create a publication.</strong><br>' \
+                  'The publication info will be used to auto-populate the ' \
+                  'title, subtitle, and description fields when slide ' \
+                  'is saved (if those fields are left blank).<br>' \
+                  'To override this auto-fill behavior, manually enter ' \
+                  'the title, subtitle, and/or description below.',
         blank=True,
         null=True,
-        help_text='If this slide is for a publication, choose/upload a PDF for this slide.',
-        related_name='slide_pdf',
-    )
-    pubmed_url = models.URLField('PubMed URL',
-        blank=True,
-        help_text='If this slide is for a publication, enter the corresponding PubMed URL.',
-    )
-    article_url = models.URLField('article URL',
-        blank=True,
-        help_text="If this slide is for a publication, enter the article's URL.",
-    )
-    journal_name = models.CharField('journal name',
-        blank=True,
-        max_length=20,
-        help_text="If this slide is for a publication, enter the journal's name. " \
-                  "It will be displayed on the button linking to the article's URL.",
     )
 
     page_link = PageField(
@@ -143,7 +152,7 @@ class Slide(models.Model):
         choices=URL_COLOR_CHOICES,
         default='default',
         help_text="If there is a page link for this slide, " \
-                  "choose the color for it's button.",
+                  "choose the color for its button.",
         max_length=7,
     )
     page_link_anchor = models.CharField("anchor",
@@ -163,7 +172,7 @@ class Slide(models.Model):
     other_url_label = models.CharField('other URL label',
         blank=True,
         help_text="If there is another relevant URL for this slide, " \
-                  "enter the label for it's button.",
+                  "enter the label for its button.",
         max_length=20,
     )
     other_url_color = models.CharField('other URL color',
@@ -171,7 +180,7 @@ class Slide(models.Model):
         choices=URL_COLOR_CHOICES,
         default='default',
         help_text="If there is another relevant URL for this slide, " \
-                  "choose the color for it's button.",
+                  "choose the color for its button.",
         max_length=7,
     )
 
@@ -186,6 +195,44 @@ class Slide(models.Model):
                   'so this can be used to control their order. ' \
                   'A future date will be hide a slide until that date.',
     )
+
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        else:
+            try:
+                self.publication.image.url
+            except:
+                return static('cms_lab_carousel/orange-pixel.gif')
+            else:
+                return self.publication.image.url
+
+    def save(self, *args, **kwargs):
+        """
+        Before saving, if slide is for a publication, use publication info
+        for slide's title, subtitle, description.
+        """
+        if self.publication:
+            publication = self.publication
+
+            if not self.title:
+                self.title = publication.title
+
+            if not self.subtitle:
+                first_author = publication.first_author
+
+                if first_author == publication.last_author:
+                    authors = first_author
+                else:
+                    authors = '{} et al.'.format(first_author)
+
+                self.subtitle = '{}, {} ({})'.format(authors,
+                    publication.journal, publication.year)
+
+            if not self.description:
+                self.description = publication.abstract
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

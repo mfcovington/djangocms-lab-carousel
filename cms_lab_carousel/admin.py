@@ -59,20 +59,12 @@ class SlideAdmin(admin.ModelAdmin):
     fieldset_basic = ('Basic Slide Info', {
         'fields': [
             'carousel',
+            'publication',
             'title',
             'subtitle',
             'description',
             'image',
             'image_is_downloadable',
-        ],
-    })
-
-    fieldset_article = ('Scientific Article Info', {
-        'fields': [
-            'pdf',
-            'pubmed_url',
-            'article_url',
-            'journal_name',
         ],
     })
 
@@ -105,14 +97,14 @@ class SlideAdmin(admin.ModelAdmin):
 
     fieldsets = [
         fieldset_basic,
-        fieldset_article,
         fieldset_page_link,
         fieldset_other_url,
         fieldset_publish,
     ]
 
     list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime' ]
-    list_filter = [CarouselFilter, 'publish_slide', 'journal_name']
+    list_filter = [CarouselFilter, 'publish_slide']
+    save_on_top = True
     search_fields = ['title', 'subtitle', 'description']
 
 admin.site.register(Slide, SlideAdmin)
