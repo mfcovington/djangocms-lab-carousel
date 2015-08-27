@@ -60,5 +60,5 @@ target/
 /manage.py
 /media/
 /mysite/
-/project.db
+/project.db*
 /static/
