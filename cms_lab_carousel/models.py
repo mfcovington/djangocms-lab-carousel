@@ -199,10 +199,13 @@ class Slide(models.Model):
     def image_url(self):
         if self.image:
             return self.image.url
-        elif self.publication:
-            return self.publication.image.url
         else:
-            return static('cms_lab_carousel/orange-pixel.gif')
+            try:
+                self.publication.image.url
+            except:
+                return static('cms_lab_carousel/orange-pixel.gif')
+            else:
+                return self.publication.image.url
 
     def save(self, *args, **kwargs):
         """
