@@ -1,5 +1,7 @@
 from django.contrib import admin
-from cms_lab_carousel.models import Carousel, Slide
+
+from .models import Carousel, Slide
+
 
 class CarouselAdmin(admin.ModelAdmin):
     fieldset_frame = ('Carousel Frame', {

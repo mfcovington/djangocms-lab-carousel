@@ -1,13 +1,13 @@
-from cms.models import CMSPlugin
-from cms.models.fields import PageField
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
+
+from cms.models import CMSPlugin
+from cms.models.fields import PageField
+from cms_lab_publications.models import Publication
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
-
-from cms_lab_publications.models import Publication
 
 
 class Carousel(models.Model):
