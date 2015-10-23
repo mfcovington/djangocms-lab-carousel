@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -190,10 +192,14 @@ class Slide(models.Model):
     )
     publish_datetime = models.DateTimeField('date/time slide published',
         default=timezone.now,
-        help_text='Choose date/time to publish slide. ' \
+        help_text='<strong>Choose date/time to publish slide.</strong><br>' \
                   'Slides are displayed in reverse-chronological order, ' \
                   'so this can be used to control their order. ' \
-                  'A future date will be hide a slide until that date.',
+                  'A future date will be hide a slide until that date.<br>' \
+                  'If this is a slide for a publication and this field is not ' \
+                  'set to a future date/time or at least one day in the past, ' \
+                  'it will be auto-populated with the date of the publication.',
+
     )
 
     def image_url(self):
@@ -231,6 +237,16 @@ class Slide(models.Model):
 
             if not self.description:
                 self.description = publication.abstract
+
+            if self.publication.year and not self.pk:
+                delta = timezone.now() - self.publish_datetime
+
+                if self.publish_datetime <= timezone.now() and delta.days == 0:
+                    self.publish_datetime = datetime.datetime(
+                        year=int(self.publication.year),
+                        month=int(self.publication.month or 1),
+                        day=int(self.publication.day or 1),
+                    )
 
         super().save(*args, **kwargs)
 
