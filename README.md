@@ -32,12 +32,6 @@ CMS Lab Carousel is A Django app for adding carousel of recent papers, etc. to a
     - Add `filer` and `easy_thumbnail` settings: 
 
         ```python
-        # For filer's Django 1.7 compatibility
-        MIGRATION_MODULES = {
-            ...
-            'filer': 'filer.migrations_django',
-        }
-
         # For easy_thumbnails to support retina displays (recent MacBooks, iOS)
         THUMBNAIL_HIGH_RESOLUTION = True
         THUMBNAIL_QUALITY = 95
