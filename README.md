@@ -2,8 +2,6 @@
 
 CMS Lab Carousel is A Django app for adding carousel of recent papers, etc. to a Django site with django CMS-specific features.
 
-<!-- Detailed documentation is in the "docs" directory. -->
-
 ## Quick start
 
 - Edit the project's `settings.py` file.

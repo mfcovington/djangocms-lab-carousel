@@ -3,4 +3,3 @@ include LICENSE
 include README.md
 recursive-include cms_lab_carousel/static *
 recursive-include cms_lab_carousel/templates *
-recursive-include docs *
