@@ -81,7 +81,10 @@ class Slide(models.Model):
     )
 
     carousel = models.ForeignKey('cms_lab_carousel.Carousel',
+        blank=True,
+        null=True,
         help_text='Choose a carousel for this slide.',
+        on_delete=models.SET_NULL,
     )
 
     title = models.CharField('slide title',
