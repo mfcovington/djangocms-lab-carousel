@@ -28,7 +28,7 @@ setup(
     packages=['cms_lab_carousel'],
     include_package_data=True,
     license='BSD License',
-    description='A Django app for adding carousel of recent papers, etc. to a Django site with django CMS-specific features',
+    description='A Django app for adding a carousel of recent papers, etc. to a Django site with django CMS-specific features',
     long_description=(read('README.rst') + '\n\n' +
                       read('CHANGELOG.rst')),
     url='https://github.com/mfcovington/djangocms-lab-carousel',
