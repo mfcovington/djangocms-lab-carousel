@@ -1,5 +1,5 @@
 include CHANGELOG.rst
 include LICENSE
-include README.md
+include README.rst
 recursive-include cms_lab_carousel/static *
 recursive-include cms_lab_carousel/templates *
