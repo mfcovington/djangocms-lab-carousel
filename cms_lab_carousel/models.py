@@ -127,6 +127,8 @@ class Slide(models.Model):
     )
 
     publication = models.ForeignKey(Publication,
+        blank=True,
+        null=True,
         help_text='<strong>If this slide is for a publication, '
                   'select/create a publication.</strong><br>'
                   'The publication info will be used to auto-populate the '
@@ -134,8 +136,7 @@ class Slide(models.Model):
                   'is saved (if those fields are left blank).<br>'
                   'To override this auto-fill behavior, manually enter '
                   'the title, subtitle, and/or description below.',
-        blank=True,
-        null=True,
+        on_delete=models.PROTECT,
     )
 
     page_link = PageField(
