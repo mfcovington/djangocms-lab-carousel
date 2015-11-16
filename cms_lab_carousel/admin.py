@@ -37,6 +37,7 @@ class CarouselAdmin(admin.ModelAdmin):
         fieldset_slides,
     ]
 
+    save_on_top = True
     search_fields = ['title']
 
 
