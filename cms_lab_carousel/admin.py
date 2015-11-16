@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Carousel, Slide
 
 
+@admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
     fieldset_frame = ('Carousel Frame', {
         'fields': [
@@ -38,9 +39,8 @@ class CarouselAdmin(admin.ModelAdmin):
 
     search_fields = ['title']
 
-admin.site.register(Carousel, CarouselAdmin)
 
-
+@admin.register(Slide)
 class SlideAdmin(admin.ModelAdmin):
 
     fieldset_basic = ('Basic Slide Info', {
@@ -94,6 +94,5 @@ class SlideAdmin(admin.ModelAdmin):
     save_on_top = True
     search_fields = ['title', 'subtitle', 'description']
 
-admin.site.register(Slide, SlideAdmin)
 
 admin.site.site_header = 'CMS Lab Carousel Administration'
