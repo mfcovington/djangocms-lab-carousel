@@ -19,11 +19,11 @@ Installation
     pip install djangocms-lab-carousel
 
 
-**GitHub**
+**GitHub (development branch)**
 
 .. code-block:: sh
 
-    pip install https://github.com/mfcovington/djangocms-lab-carousel/releases/download/0.2.1/djangocms-lab-carousel-0.2.1.tar.gz
+    pip install git+http://github.com/mfcovington/djangocms-lab-carousel.git@develop
 
 
 Configuration
