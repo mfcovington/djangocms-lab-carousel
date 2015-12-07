@@ -1,6 +1,18 @@
 Revision History
 ================
 
+0.2.1 2015-12-07
+
+- Set slide's publication date based on article's publication date
+- Prevent deletion of publication that is being used by a slide
+- On carousel deletion, set slide's carousel field to null
+- Show (and sort by) # of slides in carousel admin's list display
+- Add save buttons to top of carousel admin
+- Minor behind-the-scenes improvements
+- Update README with more complete and accurate instructions
+- Prepare for distribution via PyPI
+
+
 0.2.0 2015-08-27
 
 - Allow linking from a slide to a journal article (``djangocms-lab-publication``)
