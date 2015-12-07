@@ -16,7 +16,7 @@ Installation
 
 .. code-block:: sh
 
-    pip install https://github.com/mfcovington/djangocms-lab-carousel/releases/download/0.2.0/djangocms-lab-carousel-0.2.0.tar.gz
+    pip install https://github.com/mfcovington/djangocms-lab-carousel/releases/download/0.2.1/djangocms-lab-carousel-0.2.1.tar.gz
 
 
 Configuration
@@ -92,4 +92,4 @@ Usage
 - Insert the ``Carousel Plugin`` into a placeholder field.
 
 
-*Version 0.2.0*
+*Version 0.2.1*
