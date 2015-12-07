@@ -12,11 +12,18 @@ Source code is available on GitHub at `mfcovington/djangocms-lab-carousel <https
 Installation
 ============
 
-**GitHub**
+**PyPI**
 
 .. code-block:: sh
 
-    pip install https://github.com/mfcovington/djangocms-lab-carousel/releases/download/0.2.0/djangocms-lab-carousel-0.2.0.tar.gz
+    pip install djangocms-lab-carousel
+
+
+**GitHub (development branch)**
+
+.. code-block:: sh
+
+    pip install git+http://github.com/mfcovington/djangocms-lab-carousel.git@develop
 
 
 Configuration
@@ -92,4 +99,4 @@ Usage
 - Insert the ``Carousel Plugin`` into a placeholder field.
 
 
-*Version 0.2.0*
+*Version 0.2.1*
