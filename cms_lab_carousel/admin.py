@@ -1,7 +1,27 @@
 from django.contrib import admin
-from cms_lab_carousel.models import Carousel, Slide
+from django.db.models import Count
 
-class CarouselAdmin(admin.ModelAdmin):
+from .models import Carousel, Slide
+
+
+class SlideCounter():
+    """
+    Display (and sort by) number of slides associated with a carousel.
+    """
+
+    def get_queryset(self, request):
+        queryset = self.model.objects.get_queryset()
+        return queryset.annotate(slide_counter=Count('slide', distinct=True))
+
+    def slide_counter(self, obj):
+        return obj.slide_counter
+
+    slide_counter.admin_order_field = 'slide_counter'
+    slide_counter.short_description = '# of Slides'
+
+
+@admin.register(Carousel)
+class CarouselAdmin(SlideCounter, admin.ModelAdmin):
     fieldset_frame = ('Carousel Frame', {
         'fields': [
             'title',
@@ -34,26 +54,16 @@ class CarouselAdmin(admin.ModelAdmin):
         fieldset_slides,
     ]
 
+    list_display = [
+        'title',
+        'slide_counter',
+    ]
+
+    save_on_top = True
     search_fields = ['title']
 
-admin.site.register(Carousel, CarouselAdmin)
 
-
-class CarouselFilter(admin.SimpleListFilter):
-    title = 'Carousel'
-    parameter_name = 'carousel'
-
-    def lookups(self, request, model_admin):
-        carousel_list = set([slide.carousel for slide in model_admin.model.objects.all()])
-        return [(carousel.id, carousel.title) for carousel in carousel_list]
-
-    def queryset(self, request, queryset):
-        if self.value():
-            return queryset.filter(carousel__id__exact=self.value())
-        else:
-            return queryset
-
-
+@admin.register(Slide)
 class SlideAdmin(admin.ModelAdmin):
 
     fieldset_basic = ('Basic Slide Info', {
@@ -103,10 +113,9 @@ class SlideAdmin(admin.ModelAdmin):
     ]
 
     list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime' ]
-    list_filter = [CarouselFilter, 'publish_slide']
+    list_filter = ['publish_slide', 'carousel']
     save_on_top = True
     search_fields = ['title', 'subtitle', 'description']
 
-admin.site.register(Slide, SlideAdmin)
 
 admin.site.site_header = 'CMS Lab Carousel Administration'

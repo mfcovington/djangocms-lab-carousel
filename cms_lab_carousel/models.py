@@ -1,13 +1,15 @@
-from cms.models import CMSPlugin
-from cms.models.fields import PageField
+import datetime
+
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
+
+from cms.models import CMSPlugin
+from cms.models.fields import PageField
+from cms_lab_publications.models import Publication
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
-
-from cms_lab_publications.models import Publication
 
 
 class Carousel(models.Model):
@@ -79,58 +81,62 @@ class Slide(models.Model):
     )
 
     carousel = models.ForeignKey('cms_lab_carousel.Carousel',
+        blank=True,
+        null=True,
         help_text='Choose a carousel for this slide.',
+        on_delete=models.SET_NULL,
     )
 
     title = models.CharField('slide title',
         blank=True,
-        help_text='<strong>Enter a title to be overlayed on top of this ' \
-                  'slide.</strong><br>' \
-                  'If this is a slide for a publication and this field is ' \
-                  'left blank, it will be auto-populated with the ' \
+        help_text='<strong>Enter a title to be overlayed on top of this '
+                  'slide.</strong><br>'
+                  'If this is a slide for a publication and this field is '
+                  'left blank, it will be auto-populated with the '
                   'title of the publication.',
         max_length=255,
     )
     subtitle = models.CharField('slide subtitle',
         blank=True,
-        help_text='<strong>Enter a subtitle to be overlayed on top of this ' \
-                  'slide.</strong><br>' \
-                  'If this is a slide for a publication and this field is ' \
-                  'left blank, it will be auto-populated with the ' \
+        help_text='<strong>Enter a subtitle to be overlayed on top of this '
+                  'slide.</strong><br>'
+                  'If this is a slide for a publication and this field is '
+                  'left blank, it will be auto-populated with the '
                   'citation for the publication.',
         max_length=255,
     )
     description = models.TextField('slide description',
         blank=True,
-        help_text='<strong>Enter a description of this slide.</strong><br>' \
-                  'If this is a slide for a publication and this field is ' \
-                  'left blank, it will be auto-populated with the ' \
+        help_text='<strong>Enter a description of this slide.</strong><br>'
+                  'If this is a slide for a publication and this field is '
+                  'left blank, it will be auto-populated with the '
                   'abstract of the publication.',
     )
     image = FilerImageField(
-        help_text='<strong>Choose/upload an image for this slide.</strong><br>' \
-                  'If this is a slide for a publication and this field is ' \
+        help_text='<strong>Choose/upload an image for this slide.</strong><br>'
+                  'If this is a slide for a publication and this field is '
                   'left blank, the image for the publication will be used.',
         related_name='slide_image',
         blank=True,
         null=True,
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
-        help_text='Should the image be downloadable? ' \
+        help_text='Should the image be downloadable? '
                   'If so, a download image button will be added to the silde.',
         default=False,
     )
 
     publication = models.ForeignKey(Publication,
-        help_text='<strong>If this slide is for a publication, ' \
-                  'select/create a publication.</strong><br>' \
-                  'The publication info will be used to auto-populate the ' \
-                  'title, subtitle, and description fields when slide ' \
-                  'is saved (if those fields are left blank).<br>' \
-                  'To override this auto-fill behavior, manually enter ' \
-                  'the title, subtitle, and/or description below.',
         blank=True,
         null=True,
+        help_text='<strong>If this slide is for a publication, '
+                  'select/create a publication.</strong><br>'
+                  'The publication info will be used to auto-populate the '
+                  'title, subtitle, and description fields when slide '
+                  'is saved (if those fields are left blank).<br>'
+                  'To override this auto-fill behavior, manually enter '
+                  'the title, subtitle, and/or description below.',
+        on_delete=models.PROTECT,
     )
 
     page_link = PageField(
@@ -143,7 +149,7 @@ class Slide(models.Model):
     )
     page_link_label = models.CharField('page link label',
         blank=True,
-        help_text="The default label is the page name. " \
+        help_text="The default label is the page name. "
                   "To override the default, enter a new label.",
         max_length=20,
     )
@@ -151,7 +157,7 @@ class Slide(models.Model):
         blank=True,
         choices=URL_COLOR_CHOICES,
         default='default',
-        help_text="If there is a page link for this slide, " \
+        help_text="If there is a page link for this slide, "
                   "choose the color for its button.",
         max_length=7,
     )
@@ -171,7 +177,7 @@ class Slide(models.Model):
     )
     other_url_label = models.CharField('other URL label',
         blank=True,
-        help_text="If there is another relevant URL for this slide, " \
+        help_text="If there is another relevant URL for this slide, "
                   "enter the label for its button.",
         max_length=20,
     )
@@ -179,7 +185,7 @@ class Slide(models.Model):
         blank=True,
         choices=URL_COLOR_CHOICES,
         default='default',
-        help_text="If there is another relevant URL for this slide, " \
+        help_text="If there is another relevant URL for this slide, "
                   "choose the color for its button.",
         max_length=7,
     )
@@ -190,10 +196,14 @@ class Slide(models.Model):
     )
     publish_datetime = models.DateTimeField('date/time slide published',
         default=timezone.now,
-        help_text='Choose date/time to publish slide. ' \
-                  'Slides are displayed in reverse-chronological order, ' \
-                  'so this can be used to control their order. ' \
-                  'A future date will be hide a slide until that date.',
+        help_text='<strong>Choose date/time to publish slide.</strong><br>'
+                  'Slides are displayed in reverse-chronological order, '
+                  'so this can be used to control their order. '
+                  'A future date will be hide a slide until that date.<br>'
+                  'If this is a slide for a publication and this field is not '
+                  'set to a future date/time or at least one day in the past, '
+                  'it will be auto-populated with the date of the publication.',
+
     )
 
     def image_url(self):
@@ -231,6 +241,16 @@ class Slide(models.Model):
 
             if not self.description:
                 self.description = publication.abstract
+
+            if self.publication.year and not self.pk:
+                delta = timezone.now() - self.publish_datetime
+
+                if self.publish_datetime <= timezone.now() and delta.days == 0:
+                    self.publish_datetime = datetime.datetime(
+                        year=int(self.publication.year),
+                        month=int(self.publication.month or 1),
+                        day=int(self.publication.day or 1),
+                    )
 
         super().save(*args, **kwargs)
 

@@ -1,10 +1,11 @@
-from cms.plugin_base import CMSPluginBase
-from cms.plugin_pool import plugin_pool
-
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 
-from cms_lab_carousel.models import Carousel, CarouselPlugin, Slide
+from cms.plugin_base import CMSPluginBase
+from cms.plugin_pool import plugin_pool
+
+from .models import Carousel, CarouselPlugin, Slide
+
 
 class CMSCarouselPlugin(CMSPluginBase):
     model = CarouselPlugin
