@@ -1,10 +1,27 @@
 from django.contrib import admin
+from django.db.models import Count
 
 from .models import Carousel, Slide
 
 
+class SlideCounter():
+    """
+    Display (and sort by) number of slides associated with a carousel.
+    """
+
+    def get_queryset(self, request):
+        queryset = self.model.objects.get_queryset()
+        return queryset.annotate(slide_counter=Count('slide', distinct=True))
+
+    def slide_counter(self, obj):
+        return obj.slide_counter
+
+    slide_counter.admin_order_field = 'slide_counter'
+    slide_counter.short_description = '# of Slides'
+
+
 @admin.register(Carousel)
-class CarouselAdmin(admin.ModelAdmin):
+class CarouselAdmin(SlideCounter, admin.ModelAdmin):
     fieldset_frame = ('Carousel Frame', {
         'fields': [
             'title',
@@ -35,6 +52,11 @@ class CarouselAdmin(admin.ModelAdmin):
         fieldset_frame,
         fieldset_visibility,
         fieldset_slides,
+    ]
+
+    list_display = [
+        'title',
+        'slide_counter',
     ]
 
     save_on_top = True
