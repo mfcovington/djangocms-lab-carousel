@@ -12,6 +12,13 @@ Source code is available on GitHub at `mfcovington/djangocms-lab-carousel <https
 Installation
 ============
 
+**PyPI**
+
+.. code-block:: sh
+
+    pip install djangocms-lab-carousel
+
+
 **GitHub**
 
 .. code-block:: sh
