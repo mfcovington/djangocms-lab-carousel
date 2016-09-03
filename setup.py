@@ -18,6 +18,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 install_requires = [
     'Django>=1.7',
     'django-cms>=3.0.7,<3.2',
+    'django-colorfield>=0.1.10',
     'django-filer>=0.9.10',
     'djangocms-lab-publications>=0.1.4',
 ]

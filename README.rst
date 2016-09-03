@@ -48,6 +48,7 @@ Configuration
             # ...
             'cms_lab_carousel',
             'cms_lab_publications',
+            'colorfield',
             'easy_thumbnails',
             'filer',
             'mptt',
