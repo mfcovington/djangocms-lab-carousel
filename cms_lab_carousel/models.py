@@ -71,6 +71,12 @@ class Carousel(models.Model):
 
 class Slide(models.Model):
 
+    BACKGROUND_FILL_CHOICES = (
+        ('cover', 'Fill Slide'),
+        ('contain', 'Contain Image'),
+        ('tile', 'Tile Image'),
+    )
+
     URL_COLOR_CHOICES = (
         ('default', 'White'),
         ('primary', 'Blue'),
@@ -120,12 +126,11 @@ class Slide(models.Model):
         blank=True,
         null=True,
     )
-    fill_slide = models.BooleanField('file slide with image',
-        help_text='<strong>Should the image fill the entire slide?</strong><br>'
-                  'If not, the image will be contained within the slide '
-                  'boundaries and black bars will be added fill the rest of '
-                  'the slide.',
-        default=True,
+    image_size = models.CharField('image size',
+        choices=BACKGROUND_FILL_CHOICES,
+        default='cover',
+        help_text='How should the image be sized relative to the slide?',
+        max_length=7,
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
         help_text='Should the image be downloadable? '

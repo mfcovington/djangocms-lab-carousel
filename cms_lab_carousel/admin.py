@@ -74,7 +74,7 @@ class SlideAdmin(admin.ModelAdmin):
             'subtitle',
             'description',
             'image',
-            'fill_slide',
+            'image_size',
             'image_is_downloadable',
         ],
     })
@@ -113,7 +113,7 @@ class SlideAdmin(admin.ModelAdmin):
         fieldset_publish,
     ]
 
-    list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime' ]
+    list_display = ['title', 'carousel', 'publish_slide', 'publish_datetime', 'image_size', 'image' ]
     list_filter = ['publish_slide', 'carousel']
     save_on_top = True
     search_fields = ['title', 'subtitle', 'description']
