@@ -74,6 +74,7 @@ class SlideAdmin(admin.ModelAdmin):
             'subtitle',
             'description',
             'image',
+            'fill_slide',
             'image_is_downloadable',
         ],
     })

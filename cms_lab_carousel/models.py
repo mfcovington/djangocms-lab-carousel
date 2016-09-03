@@ -120,6 +120,13 @@ class Slide(models.Model):
         blank=True,
         null=True,
     )
+    fill_slide = models.BooleanField('file slide with image',
+        help_text='<strong>Should the image fill the entire slide?</strong><br>'
+                  'If not, the image will be contained within the slide '
+                  'boundaries and black bars will be added fill the rest of '
+                  'the slide.',
+        default=True,
+    )
     image_is_downloadable = models.BooleanField('image is downloadable',
         help_text='Should the image be downloadable? '
                   'If so, a download image button will be added to the silde.',
