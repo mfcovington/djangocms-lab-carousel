@@ -1,6 +1,6 @@
 <div class="item {% if forloop.counter0 == 0 %}active{% endif %}">
 
-  <div style="background:url('{{ slide.image_url }}') black center center {% if slide.image_size != 'tile' %}no-repeat{% endif %};
+  <div style="background:url('{{ slide.image_url }}') {{ slide.background_color }} center center {% if slide.image_size != 'tile' %}no-repeat{% endif %};
               background-size:{% if slide.image_size == 'cover' %}cover{% else %}contain{% endif %};"
        class="slider-size">
     <div class="carousel-caption container-fluid">

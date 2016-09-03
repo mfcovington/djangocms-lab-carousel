@@ -8,6 +8,7 @@ from django.utils import timezone
 from cms.models import CMSPlugin
 from cms.models.fields import PageField
 from cms_lab_publications.models import Publication
+from colorfield.fields import ColorField
 from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
@@ -131,6 +132,11 @@ class Slide(models.Model):
         default='cover',
         help_text='How should the image be sized relative to the slide?',
         max_length=7,
+    )
+    background_color = ColorField('background color',
+        default='#000',
+        help_text='If the full image is contained within the slide boundaries, '
+                  'choose a background color to fill in the empty spaces.',
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
         help_text='Should the image be downloadable? '
