@@ -139,8 +139,8 @@ class Slide(models.Model):
                   'choose a background color to fill in the empty spaces.',
     )
     image_is_downloadable = models.BooleanField('image is downloadable',
-        help_text='Should the image be downloadable? '
-                  'If so, a download image button will be added to the silde.',
+        help_text='<strong>Should the image be downloadable?</strong><br>'
+                  'If so, a download image button will be added to the slide.',
         default=False,
     )
 
